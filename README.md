@@ -5,6 +5,30 @@
 
 ---
 
+## Bài nộp
+
+| | |
+|---|---|
+| **Học viên** | Nguyễn Lê Phúc Thắng |
+| **MSSV** | 2A202602638 |
+| **Repo** | `K4-Track3A-DAY18-NguyenLePhucThang-2A202602638-ProductionRAG` |
+
+**Kết quả RAGAS** (`reports/ragas_report.json`, LLM + judge: `deepseek-chat`, embeddings RAGAS: bge-m3 local):
+
+| Metric | Naive Baseline | Production | Δ |
+|--------|---------------|-----------|---|
+| Faithfulness | 0.8000 | 0.8594 | +0.0594 |
+| Answer Relevancy | 0.7759 | 0.8578 | +0.0819 |
+| Context Precision | 0.7750 | 0.8500 | +0.0750 |
+| Context Recall | 0.8500 | 0.9250 | +0.0750 |
+
+- Pipeline: hierarchical chunking (child 256 / parent 2048) → combined enrichment (1 call/chunk) → BM25 + bge-m3 + RRF → bge-reranker-v2-m3 → top-3 parent → LLM.
+- Failure analysis: [analysis/failure_analysis.md](analysis/failure_analysis.md) · Reflection: [analysis/reflections/reflection_NguyenLePhucThang.md](analysis/reflections/reflection_NguyenLePhucThang.md)
+- Latency breakdown: mục `latency` trong `reports/ragas_report.json` và bảng trong failure analysis.
+- Dùng provider OpenAI-compatible khác (DeepSeek…): xem biến `OPENAI_BASE_URL`, `LLM_MODEL` trong `.env.example`; `RERANKER_MODEL` (HF id hoặc đường dẫn model tải tay) trong `config.py`.
+
+---
+
 ## Tổng quan
 
 Bài tập **cá nhân** — implement toàn bộ 5 modules:
